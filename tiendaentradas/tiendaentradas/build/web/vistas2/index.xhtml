@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+       <ui:composition template="./templateAdmin.xhtml">
+           <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form>              
+                <p:commandButton id="btnUsuarioCreate" update=":formCreate" oncomplete="PF('dialogUsuarioCreate').show()" icon="ui-icon-search" title="Crear" value="Crear"/>                      
+                </h:form>  
+                <h:form>
+                    <p:fieldset legend="Datos" style="margin-bottom:20px">
+                        Id
+                        <h:outputText value="#{loginBean.usuario.idUsuario}" />
+                        Nombre
+                        <h:outputText value="#{loginBean.usuario.nombre}" />
+
+                </p:fieldset>
+                </h:form>
+                <h:form id="formDataTable">
+                    <p:dataTable id="cars" var="usuario" value="#{usuarioBean.usuarios}">
+
+                        <p:column headerText="ID" style="width:24%">
+                            <h:outputText value="#{usuario.idUsuario}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre" style="width:24%">
+                            <h:outputText value="#{usuario.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Email" style="width:24%">
+                            <h:outputText value="#{usuario.email}" />
+                        </p:column>
+
+                        <p:column headerText="Edad" style="width:24%">
+                            <h:outputText value="#{usuario.edad}" />
+                        </p:column>
+                        
+                        <p:column headerText="Saldo" style="width:24%">
+                            <h:outputText value="#{usuario.saldo}" />
+                        </p:column>
+                        
+                        <p:column headerText="Telefono" style="width:24%">
+                            <h:outputText value="#{usuario.telefono}" />
+                        </p:column>
+
+                        <p:column style="width:4%">
+                            <p:commandButton id="btnUpdate" update=":formUpdate" oncomplete="PF('dialogUsuarioUpdate').show()" icon="ui-icon-search" title="Modificar">
+                                <f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.selectedUsuario}" />
+                            </p:commandButton>                         
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+                <h:form id="formCreate">
+                    <p:dialog header="Crear Usuario" widgetVar="dialogUsuarioCreate" resizable="false" id="dlgUsuarioCreate"
+                              showEffect="fade" hideEffect="explode" modal="true">
+
+                        <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                            <h:form id="frmRegistrarUsuario">
+                                <h:panelGrid columns="2">                
+                                    <h:outputText value="Nombre"/>
+                                    <p:inputText id="txtNombre" value="#{mbRusuario.getUsuario().nombre}"/>
+                                    <h:outputText value="Contraseña"/>
+                                    <p:password id="txtContrasenia" value="#{mbRusuario.getUsuario().contrasenia}"/>
+                                    <h:outputText value="Email"/>
+                                    <p:inputText id="txtEmail" value="#{mbRusuario.getUsuario().email}"/>
+                                    <h:outputText value="Telefono"/>
+                                    <p:inputText id="txtTelefono" value="#{mbRusuario.getUsuario().telefono}"/>
+                                    <h:outputText value="Edad"/>
+                                    <p:inputText id="txtEdad" value="#{mbRusuario.getUsuario().edad}"/>
+                                    <h:outputText value="Privilegios"/>
+                                    <p:inputText id="txtAdmin" value="#{mbRusuario.getUsuario().esAdmin}"/>
+                                    </h:panelGrid>
+                                 </h:form> 
+                            <f:facet name="footer">
+                                <p:separator/>
+                                <p:commandButton value="Registrar Usuario" oncomplete="PF('dialogUsuarioCreate').hide()" action="#{mbRusuario.register()}"/>
+                                <p:commandButton id="btnCreateCancelar"  oncomplete="PF('dialogUsuarioCreate').hide()" icon="ui-icon-search" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar Usuario" widgetVar="dialogUsuarioUpdate" resizable="false" id="dlgUsuarioUpdate"
+                              showEffect="fade" hideEffect="explode" modal="true">
+
+                        <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                            <h:outputText value="Id:" />
+                            <p:inputText value="#{usuarioBean.selectedUsuario.idUsuario}" />
+
+                            <h:outputText value="Usuario:" />
+                            <p:inputText value="#{usuarioBean.selectedUsuario.nombre}" />
+
+
+                            <h:outputText value="Contraseña:" />
+                            <p:inputText value="#{usuarioBean.selectedUsuario.contrasenia}" />
+                            
+                            <h:outputText value="Edad:" />
+                            <p:inputText value="#{usuarioBean.selectedUsuario.edad}" />
+                            
+                            <h:outputText value="Saldo:" />
+                            <p:inputText value="#{usuarioBean.selectedUsuario.saldo}" />
+                            
+                            <h:outputText value="Telefono:" />
+                            <p:inputText value="#{usuarioBean.selectedUsuario.telefono}" />
+
+                            <h:outputText value="Email:" />
+                            <p:inputText value="#{usuarioBean.selectedUsuario.email}" size="60" />
+                            <f:facet name="footer">
+                                 <p:separator/>
+                                 <p:commandButton id="btnUpdateAceptar"  oncomplete="PF('dialogUsuarioUpdate').hide()" actionListener="#{usuarioBean.btnUpdateUsuario(actionEvent)}" icon="ui-icon-search" title="Guardar" value="Guardar"/>
+                                 <p:commandButton id="btnUpdateCancelar"  oncomplete="PF('dialogUsuarioUpdate').hide()" icon="ui-icon-search" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="frmBorrarUsuario">
+                                <h:panelGrid columns="2">                
+                                    <h:outputText value="Id Usuario a borrar"/>
+                                    <p:inputText id="txtNombre" value="#{usuarioBean.borrar}"/>
+                                    <h:commandButton value="Borrar" action="#{usuarioBean.btnDeleteUsuario()}"/>
+                                 </h:panelGrid>
+                    </h:form>            
+                
+                <h:form id="frmagregarSaldo">
+                                <h:panelGrid columns="2">                
+                                    <h:outputText value="Insertar ID del usuario"/>
+                                    <p:inputText id="txtIdUserSaldo" value="#{usuarioBean.borrar}"/>
+                                    <h:outputText value="Cantidad de saldo"/>
+                                    <p:inputText id="txtSaldo" value="#{usuarioBean.saldo}"/>
+                                    <h:commandButton value="Añadir Creditos" action="#{usuarioBean.añadirSaldo()}"/>
+                                 </h:panelGrid>
+                </h:form>
+                
+                </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

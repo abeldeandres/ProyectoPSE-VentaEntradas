@@ -1,0 +1,44 @@
+/* 
+    Document   : login
+    Created on : 15-may-2014, 20:42:02
+    Author     : Abel
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body {
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+.header {
+    background: #438a48;
+    width: 100%;
+}
+
+#leftcolumn {
+    background: #2675a8;
+    float: left;
+    width: 25%;
+    height: 700px;
+}
+
+.content {
+    background: #2675a8;
+    float: left;
+    width: 75%;
+    height: 700px;
+}
+
+#footer {
+    background: #df781c;
+    clear: both;
+    width: 100%;
+}
+
+.contenedor{
+    float: left;
+    width: 25%;
+    height: 700px;
+}

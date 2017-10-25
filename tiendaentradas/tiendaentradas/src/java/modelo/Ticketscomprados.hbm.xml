@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 03-jun-2014 19:55:22 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="modelo.Ticketscomprados" table="ticketscomprados" catalog="tiendaentradas" lazy="false">
+        <id name="idTickets" type="java.lang.Integer">
+            <column name="id_tickets" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="concierto" class="modelo.Concierto" fetch="select">
+            <column name="id_concierto" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuario" class="modelo.Usuario" fetch="select">
+            <column name="id_usuario" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Login</title>
+        <link href="#{appBean.baseUrl}resources/css/login.css" type="text/css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <div class="header">
+            <p:imageSwitch effect="shuffle">
+                <ui:repeat value="#{imageSwitchBean.images}" var="image">
+                    <p:graphicImage value="/images/#{image}" />
+                </ui:repeat>
+            </p:imageSwitch>
+        </div>
+        <div class="contenedor">
+            <p:growl id="growl" showDetail="true" life="3000" />
+            <h:form id="formLogin">
+                <p:panel header="Ingresar Usuario y Contraseña">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="username" value="Usuario:" />
+                        <p:inputText value="#{loginBean.usuario.nombre}"
+                                     id="username" required="true" label="username" />
+
+                        <h:outputLabel for="password" value="Contraseña:" />
+                        <p:password value="#{loginBean.usuario.contrasenia}"
+                                    id="password" required="true" label="password" />
+                        <f:facet name="footer">
+                            <p:commandButton id="loginButton" value="Login" update=":growl"
+                                             actionListener="#{loginBean.login(actionEvent)}"
+                                             oncomplete="handleLoginRequest(xhr, status, args)"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </p:panel>    
+            </h:form>
+            <h:panelGrid columns="1" cellpadding="5">
+                <p:commandButton value="Pulse aquí para registrarse" type="button" onclick="PF('dlg3').show();" />
+            </h:panelGrid>
+            <p:dialog header="Formulario de Registro" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="250">
+                <h:form id="frmRegistrarUsuario">
+                    <h:panelGrid columns="2">                
+                        <h:outputText value="Nombre"/>
+                        <p:inputText id="txtNombre" value="#{mbRusuario.getUsuario().nombre}"/>
+                        <h:outputText value="Contraseña"/>
+                        <p:password id="txtContrasenia" value="#{mbRusuario.getUsuario().contrasenia}"/>
+                        <h:outputText value="Email"/>
+                        <p:inputText id="txtEmail" value="#{mbRusuario.getUsuario().email}"/>
+                        <h:outputText value="Telefono"/>
+                        <p:inputText id="txtTelefono" value="#{mbRusuario.getUsuario().telefono}"/>
+                        <h:outputText value="Edad"/>
+                        <p:inputText id="txtEdad" value="#{mbRusuario.getUsuario().edad}"/>
+
+                        <p:commandButton value="Registrar Usuario" action="#{mbRusuario.register()}" oncomplete="PF('dlg3').hide();"/>
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+            <p:calendar mode="inline" id="inlineCal"/>
+        </div>
+        <div class="content">         
+            <p:growl id="msgs" showDetail="true" />
+            
+            <h:form id="formDataTable">
+
+                <p:dataTable id="cars" var="concierto" value="#{conciertoBean.conciertos}" 
+                             paginator="true" rows="5" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">
+                        Listado de Conciertos
+                    </f:facet>
+
+                    <p:column headerText="Nombre" style="width:10%" filterBy="#{concierto.nombreGrupo}" filterMatchMode="contains" >
+                        <h:outputText value="#{concierto.nombreGrupo}" />
+                    </p:column>
+
+                    <p:column headerText="Genero" style="width:10%" filterBy="#{concierto.genero}" filterMatchMode="contains">
+                        <h:outputText value="#{concierto.genero}" />
+                    </p:column>
+
+                    <p:column headerText="Lugar" style="width:10%" filterBy="#{concierto.lugar}" filterMatchMode="contains">
+                        <h:outputText value="#{concierto.lugar}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha" style="width:10%" filterBy="#{concierto.fecha}" filterMatchMode="contains">
+                        <h:outputText value="#{concierto.fecha}" />
+                    </p:column>
+
+                    <p:column headerText="Precio" style="width:10%" filterBy="#{concierto.precio}" filterMatchMode="contains">
+                        <h:outputText value="#{concierto.precio}" />    
+                    </p:column>
+                    <p:column headerText="Entradas" style="width:10%">
+                        <p:progressBar value="#{concierto.numEntradas}" labelTemplate="{value} disponibles" displayOnly="true"/>  
+                    </p:column>
+
+
+                </p:dataTable>
+            </h:form>
+
+        </div>
+
+        <script type="text/javascript">
+                    function handleLoginRequest(xhr, status, args) {
+                        if (args.validationFailed || !args.loggedIn) {
+                            jQuery('#formLogin').effect("shake", {times: 3}, 100);
+                            jQuery('#formLoginAdmin').effect("shake", {times: 3}, 100);
+                        }
+                        else {
+                            location.href = args.ruta;
+                        }
+                    }
+        </script>
+
+    </h:body>
+</html>
+

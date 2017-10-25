@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./template.xhtml">
+
+
+
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />               
+                <h:form id="formDataTable">
+                    <p:growl id="msgs" showDetail="true" />
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel value="ID Usuario:" />
+                        <h:outputText value="#{loginBean.usuario.idUsuario}" />
+                        <h:outputLabel value="Nombre:" />
+                        <h:outputText value="#{loginBean.usuario.nombre}" />
+                        <h:outputLabel value="Edad:" />
+                        <h:outputText value="#{loginBean.usuario.edad}" />
+                        <h:outputLabel value="Telefono:" />
+                        <h:outputText value="#{loginBean.usuario.telefono}" />
+                        <h:outputLabel value="Email:" />
+                        <h:outputText value="#{loginBean.usuario.email}" />
+                        <h:outputLabel value="Saldo:" />
+                        <h:outputText value="#{loginBean.usuario.saldo}" />
+
+                        
+                    </h:panelGrid>
+                    <p:dataTable id="cars" var="concierto" value="#{conciertoBean.conciertos}" 
+                             paginator="true" rows="5" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">
+                        Listado de Conciertos
+                    </f:facet>
+                     <p:column headerText="ID" style="width:10%" >
+                         <h:outputText value="#{concierto.idConcierto}" />
+                    </p:column>   
+                    <p:column headerText="Nombre" style="width:10%" filterBy="#{concierto.nombreGrupo}" filterMatchMode="contains" >
+                        <h:outputText value="#{concierto.nombreGrupo}" />
+                    </p:column>
+
+                    <p:column headerText="Genero" style="width:10%" filterBy="#{concierto.genero}" filterMatchMode="contains">
+                        <h:outputText value="#{concierto.genero}" />
+                    </p:column>
+
+                    <p:column headerText="Lugar" style="width:10%" filterBy="#{concierto.lugar}" filterMatchMode="contains">
+                        <h:outputText value="#{concierto.lugar}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha" style="width:10%" filterBy="#{concierto.fecha}" filterMatchMode="contains">
+                        <h:outputText value="#{concierto.fecha}" />
+                    </p:column>
+
+                    <p:column headerText="Precio" style="width:10%" filterBy="#{concierto.precio}" filterMatchMode="contains">
+                        <h:outputText value="#{concierto.precio}" />    
+                    </p:column>
+                    <p:column headerText="Entradas" style="width:10%">
+                        <p:progressBar value="#{concierto.numEntradas}" labelTemplate="{value} disponibles" displayOnly="true"/>  
+                    </p:column>
+
+                </p:dataTable>
+
+                                  
+                </h:form>
+                <h:form id="formCreate">
+                    <p:dialog header="Crear concierto" widgetVar="dialogConciertoCreate" resizable="false" id="dlgConciertoCreate"
+                              showEffect="fade" hideEffect="explode" modal="true">
+
+                        <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                            <h:form id="frmCrearConcierto">
+                                <h:panelGrid columns="2">                
+                                    <h:outputText value="Nombre Grupo"/>
+                                    <p:inputText id="txtNombreGrupo" value="#{mbRconcierto.getConcierto().nombreGrupo}"/>
+                                    <h:outputText value="Genero"/>
+                                    <p:inputText  id="txtGenero" value="#{mbRconcierto.getConcierto().genero}"/>
+                                    <h:outputText value="Lugar"/>
+                                    <p:inputText id="txtLugar" value="#{mbRconcierto.getConcierto().lugar}"/>
+                                    <h:outputText value="Fecha" />
+                                    <p:calendar id="txtFecha" showOn="button" value="#{mbRconcierto.getConcierto().fecha}"/> 
+                                    <h:outputText value="Precio"/>
+                                    <p:inputText id="txtPrecio" value="#{mbRconcierto.getConcierto().precio}"/>
+                                    </h:panelGrid>
+                                 </h:form> 
+                            <f:facet name="footer"> 
+                                <p:separator/>
+                                <p:commandButton value="Crear concierto" oncomplete="PF('dialogConciertoCreate').hide()" action="#{mbRconcierto.registerConcierto()}"/>
+                                 <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogConciertoCreate').hide()" icon="ui-icon-search" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </h:panelGrid>
+
+                    </p:dialog>
+
+                </h:form>
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar concierto" widgetVar="dialogConciertoUpdate" resizable="false" id="dlgConciertoUpdate"
+                              showEffect="fade" hideEffect="explode" modal="true">
+
+                        <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                            <h:outputText value="Nombre:" />
+                            <p:inputText value="#{conciertoBean.selectedConcierto.idConcierto}" style="font-weight:bold"/>
+
+                            <h:outputText value="Nombre:" />
+                            <p:inputText value="#{conciertoBean.selectedConcierto.nombreGrupo}" style="font-weight:bold"/>
+
+                            <h:outputText value="Genero:" />
+                            <p:inputText value="#{conciertoBean.selectedConcierto.genero}" style="font-weight:bold"/>
+
+
+                            <h:outputText value="Lugar:" />
+                            <p:inputText value="#{conciertoBean.selectedConcierto.lugar}" style="font-weight:bold"/>
+
+                            <h:outputText value="Fecha:" />
+                            <p:inputText value="#{conciertoBean.selectedConcierto.fecha}" style="font-weight:bold"/>
+                             <f:facet name="footer"> 
+                                 <p:separator/>
+                                 <p:commandButton id="btnUpdateAceptar" update=":formDataTable, :msgs" action="#{conciertoBean.btnUpdateConcierto(actionEvent)}" oncomplete="PF('dialogConciertoUpdate').hide()" icon="ui-icon-search" title="Guardar" value="Guardar"/>
+                                 <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogConciertoUpdate').hide()" icon="ui-icon-search" title="Cancelar" value="Cancelar"/>
+                            </f:facet>
+                        </h:panelGrid>
+
+                    </p:dialog>
+
+                </h:form>
+                 <h:form id="frmComprarConcierto">
+                                <h:panelGrid columns="2">                
+                                    <h:outputText value="Insertar ID de concierto a comprar"/>
+                                    <p:inputText id="txtIdConcierto" value="#{loginBean.idConcierto}"/>
+                                    <h:commandButton value="Comprar" action="#{loginBean.registerConcierto()}"/>
+                                 </h:panelGrid>
+                    </h:form>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

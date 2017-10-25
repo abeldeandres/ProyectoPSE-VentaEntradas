@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 03-jun-2014 19:55:22 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="modelo.Concierto" table="concierto" catalog="tiendaentradas" lazy="false">
+        <id name="idConcierto" type="java.lang.Integer">
+            <column name="id_concierto" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreGrupo" type="string">
+            <column name="nombreGrupo" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="genero" type="string">
+            <column name="genero" length="45" not-null="true" />
+        </property>
+        <property name="lugar" type="string">
+            <column name="lugar" length="45" not-null="true" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="fecha" length="10" not-null="true" />
+        </property>
+        <property name="precio" type="java.lang.Float">
+            <column name="precio" precision="12" scale="0" />
+        </property>
+        <property name="numEntradas" type="java.lang.Integer">
+            <column name="numEntradas" />
+        </property>
+        <set name="ticketscompradoses" inverse="true">
+            <key>
+                <column name="id_concierto" not-null="true" />
+            </key>
+            <one-to-many class="modelo.Ticketscomprados" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-may-2014 20:28:38 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="modelo.Entrada" table="entrada" catalog="tiendaentradas" lazy="false">
+        <id name="idEntrada" type="java.lang.Integer">
+            <column name="id_entrada" />
+            <generator class="identity" />
+        </id>
+        <property name="tipo" type="string">
+            <column name="tipo" length="45" not-null="true" />
+        </property>
+        <property name="numero" type="int">
+            <column name="numero" not-null="true" />
+        </property>
+        <property name="precio" type="float">
+            <column name="precio" precision="12" scale="0" not-null="true" />
+        </property>
+        <property name="idConcierto" type="int">
+            <column name="id_concierto" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

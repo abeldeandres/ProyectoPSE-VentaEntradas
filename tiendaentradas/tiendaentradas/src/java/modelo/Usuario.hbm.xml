@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 03-jun-2014 19:55:22 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="modelo.Usuario" table="usuario" catalog="tiendaentradas" lazy="false">
+        <id name="idUsuario" type="java.lang.Integer">
+            <column name="id_usuario" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="contrasenia" type="string">
+            <column name="contrasenia" length="400" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="saldo" type="java.lang.Float">
+            <column name="saldo" precision="12" scale="0" />
+        </property>
+        <property name="telefono" type="java.lang.Integer">
+            <column name="telefono" />
+        </property>
+        <property name="edad" type="int">
+            <column name="edad" not-null="true" />
+        </property>
+        <property name="esAdmin" type="boolean">
+            <column name="esAdmin" not-null="true" />
+        </property>
+        <set name="ticketscompradoses" inverse="true">
+            <key>
+                <column name="id_usuario" not-null="true" />
+            </key>
+            <one-to-many class="modelo.Ticketscomprados" />
+        </set>
+    </class>
+</hibernate-mapping>
